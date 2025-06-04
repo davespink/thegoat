@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
             "type": "chrome",
             "request": "launch",
@@ -15,8 +16,14 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Open styler.html",
-            "url": "http://localhost/projects/thegoat/styler.html",
+            "name": "Open colors.html",
+            "url": "http://localhost/projects/thegoat/colors.html",
+        }
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Open sizes.html",
+            "url": "http://localhost/projects/thegoat/sizes.html",
         }
     ]
 }

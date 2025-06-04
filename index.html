@@ -345,7 +345,7 @@ TODO:
 
     window.onload = async function () {
       await renderPosts();
-      version.innerHTML = "v1.16 - 1 June 2025 lib " + getVersion();
+
       renderHashtags();
 
       // Parse slug from query string
@@ -407,21 +407,7 @@ TODO:
       <!-- Left Column -->
       <div id="left-column" class="w3-col m2">
         <br>
-        <!-- Profile -->
-        <div class="w3-card w3-round w3-margin" style="color:var(--text-color)">
-          <div>
-            <h4 class="w3-center">
-              <p id="version"></p>
-            </h4>
-            <p class="w3-center"><img src="images/life.png" class="w3-circle" style="height:150px;width:150px"
-                alt="Profile picture"></p>
-            <hr>
 
-            <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-            <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 2, 2025</p>
-          </div>
-        </div>
-        <br>
 
         <!-- IFrame version -->
 
@@ -778,7 +764,20 @@ TODO:
     });
   </script>
 
+  <script>
 
+    function doColors() {
+      const stylerIFrame = gid('styler-iframe');
+      stylerIFrame.src = "colors.html";
+      gid("styler-menu-dropdown").style.display = "none";
+    }
+    function doSizes() {
+      const stylerIFrame = gid('styler-iframe');
+      stylerIFrame.src = "sizes.html";
+      gid("styler-menu-dropdown").style.display = "none";
+    }
+
+  </script>
 
 
 
@@ -791,17 +790,17 @@ TODO:
       <div id="styler-menu-dropdown"
         style="display:none;position:absolute;top:38px;left:0;
             width:240px;color:black;background:#fff;border-radius:0 0 6px 6px;box-shadow:0 2px 8px #0002;z-index:10000;">
-        <div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;">Placeholder 1</div>
-        <div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;">Placeholder 2</div>
+        <div onclick="doColors()" style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;">Colors</div>
+        <div onclick="doSizes()" style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;">Sizes</div>
         <div id="styler-close-btn" style="padding:10px;color:#f44336;cursor:pointer;">Close</div>
       </div>
     </div>
     <div style="background:#fff;color:black;font-size:16px;border-radius:0 0 6px 6px;">
-     
 
 
-      <iframe title="Styler Panel" src="styler.html"
-        style="width:100%; height:fit-content; border:none ;overflow:hidden;" scrolling="no"></iframe>
+
+      <iframe id="styler-iframe" title="Styler Panel" src="colors.html"
+        style="width:100%; height:300px; border:none ;overflow:hidden;" scrolling="no"></iframe>
 
 
     </div>
@@ -837,20 +836,13 @@ TODO:
     })();
   </script>
 
-
-
-
-
-
-
-
   <script>
     // Hamburger menu logic for styler panel
     (function () {
       const menuBtn = document.getElementById('styler-menu-btn');
       const dropdown = document.getElementById('styler-menu-dropdown');
       const closeBtn = document.getElementById('styler-close-btn');
-      const panel = document.getElementById('styler-tool');
+      const tool = document.getElementById('styler-tool');
 
       menuBtn.addEventListener('click', function (e) {
         e.stopPropagation();
@@ -866,12 +858,12 @@ TODO:
 
       // Close panel on "Close" click
       closeBtn.addEventListener('click', function () {
-        panel.style.display = 'none';
+        tool.style.display = 'none';
       });
     })();
   </script>
 
-<!--
+  <!--
 
 
   <script>
@@ -915,33 +907,35 @@ TODO:
 -->
 
   <script>
-    document.addEventListener('contextmenu', function(event) {
-  event.preventDefault(); // Prevent default menu
-  document.querySelectorAll('*').forEach(el => {
-    el.style.outline = ''; // Remove highlight from all elements
-  });
-  // Highlight the element
-  event.target.style.outline = '2px solid orange';
-  // Show your custom menu at event.clientX/Y
-  // ...your code to show menu...
-});
+    document.addEventListener('contextmenu', function (event) {
+      event.preventDefault(); // Prevent default menu
+      //document.querySelectorAll('*').forEach(el => {
+      //  el.style.outline = ''; // Remove highlight from all elements
+      //  });
+      clearAllOutlines();
+      // Highlight the element
+      event.target.style.outline = '2px solid orange';
+      document.getElementById('styler-tool').style.display = 'block';
+      // Show your custom menu at event.clientX/Y
+      // ...your code to show menu...
+    });
   </script>
   <script>
-function clearAllOutlines() {
-  // Remove outlines from top document
-  document.querySelectorAll('*').forEach(el => {
-    el.style.outline = '';
-  });
-  // Remove outlines from all iframes
-  Array.from(document.getElementsByTagName('iframe')).forEach(frame => {
-    try {
-      if (frame.contentWindow && typeof frame.contentWindow.clearAllOutlines === 'function') {
-        frame.contentWindow.clearAllOutlines();
-      }
-    } catch (e) {}
-  });
-}
-</script>
+    function clearAllOutlines() {
+      // Remove outlines from top document
+      document.querySelectorAll('*').forEach(el => {
+        el.style.outline = '';
+      });
+      // Remove outlines from all iframes
+      Array.from(document.getElementsByTagName('iframe')).forEach(frame => {
+        try {
+          if (frame.contentWindow && typeof frame.contentWindow.clearAllOutlines === 'function') {
+            frame.contentWindow.clearAllOutlines();
+          }
+        } catch (e) { }
+      });
+    }
+  </script>
 </body>
 
 </html>

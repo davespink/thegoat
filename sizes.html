@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+
+    <style>
+        html,
+        body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            background: transparent;
+        }
+
+        #styler-panel {
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="styler-panel" class="w3-card w3-round w3-margin"
+        style="height:300px;color:var(--text-color);overflow-y:hidden;">
+      
+        <h4 class="w3-center">Element Sizes</h4>
+        <div style="text-align:center;padding:10px;">
+            <label>W <input type="range" min="1" max="400" value="200" id="w-slider"></label><br>
+            <label>H <input type="range" min="1" max="400" value="200" id="h-slider"></label><br>
+
+            <div id="slider-preview" style="margin-top:10px;width:200px;height:200px;border-radius:4px;background:blue;">
+            </div>
+            <button id="persist-style" style="margin-top:10px;margin-bottom:0px;width:90%;">Persist</button>
+        </div>
+    </div>
+    <script>
+        var targetElement;
+        (function () {
+            // Standalone test mode if not in an iframe or no parent communication
+            if (window === window.parent) {
+//targetElement = document.getElementById('testDiv');
+            
+                // Not in an iframe: create a test element
+                // Use testElement as your target for styling, etc.
+            } else {
+                // In iframe: wait for parent to send the real element reference
+                window.addEventListener('message', function (e) {
+                    if (e.data.type === 'select-element') {
+                        targetElement = e.data.element; // e.data.element may be a selector or reference
+                        // e.data.element may be a selector or reference
+                        // Use it as your target
+                    }
+                });
+            }
+        })();
+    </script>
+
+    <script>
+        (function () {
+            const w = document.getElementById('w-slider');
+            const h = document.getElementById('h-slider');
+        
+            const preview = document.getElementById('slider-preview');
+
+//            const iframe = parent.document.querySelector('iframe[title="Profile"]');
+            const persistBtn = document.getElementById('persist-style');
+
+            function updateSizes() {
+
+                const width = w.value;
+                const height = h.value;
+                preview.style.width = `${width}px`;
+                preview.style.height = `${height}px`;
+ 
+                if (targetElement) {
+                    targetElement.style.width = `${width}px`;
+                    targetElement.style.height = `${height}px`;
+                } else {
+                    console.warn('Target element not set. Color will not be applied.');
+                }
+            }
+
+            // Load persisted style
+
+            [w, h].forEach(slider => slider.addEventListener('input', updateSizes));
+
+            // Persist style
+            persistBtn.addEventListener('click', function () {
+             //   localStorage.setItem('iframe-bg', JSON.stringify({ r: r.value, g: g.value, b: b.value }));
+                alert('Style persisted!');
+            });
+        })();
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
