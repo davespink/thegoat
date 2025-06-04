@@ -425,7 +425,7 @@ TODO:
 
         <!-- IFrame version -->
 
-        <iframe src="profile.html" style="width:100%;border:none;height:320px;" title="Profile"></iframe>
+        <iframe id="profile" src="profile.html" style="width:100%;border:none;height:320px;" title="Profile"></iframe>
 
 
 
@@ -789,7 +789,8 @@ TODO:
       Styler Panel
       <span id="styler-menu-btn" style="margin-left:auto;cursor:pointer;font-size:22px;padding:0 8px;">&#9776;</span>
       <div id="styler-menu-dropdown"
-        style="display:none;position:absolute;top:38px;left:0;width:240px;background:#fff;border-radius:0 0 6px 6px;box-shadow:0 2px 8px #0002;z-index:10000;">
+        style="display:none;position:absolute;top:38px;left:0;
+            width:240px;color:black;background:#fff;border-radius:0 0 6px 6px;box-shadow:0 2px 8px #0002;z-index:10000;">
         <div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;">Placeholder 1</div>
         <div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;">Placeholder 2</div>
         <div id="styler-close-btn" style="padding:10px;color:#f44336;cursor:pointer;">Close</div>
@@ -858,7 +859,7 @@ TODO:
       const menuBtn = document.getElementById('styler-menu-btn');
       const dropdown = document.getElementById('styler-menu-dropdown');
       const closeBtn = document.getElementById('styler-close-btn');
-      const panel = document.getElementById('styler-panel');
+      const panel = document.getElementById('styler-tool');
 
       menuBtn.addEventListener('click', function (e) {
         e.stopPropagation();
@@ -879,7 +880,7 @@ TODO:
     })();
   </script>
 
-  
+
   <script>
     (function () {
       const r = document.getElementById('r-slider');
