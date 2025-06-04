@@ -783,12 +783,13 @@ TODO:
 
 
   <!-- Add this to index.html, outside the iframe -->
-  <div id="styler-panel" style="position:fixed;top:40px;left:40px;width:240px;z-index:9999;box-shadow:0 2px 8px #0002;">
+  <div id="styler-tool" style="position:fixed;top:40px;left:40px;width:240px;z-index:9999;box-shadow:0 2px 8px #0002;">
     <div id="styler-drag"
       style="background:#1976d2;color:#fff;padding:8px;cursor:move;font-weight:bold;border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:space-between;">
       Styler Panel
       <span id="styler-menu-btn" style="margin-left:auto;cursor:pointer;font-size:22px;padding:0 8px;">&#9776;</span>
-      <div id="styler-menu-dropdown" style="display:none;position:absolute;top:38px;left:0;width:240px;background:#fff;border-radius:0 0 6px 6px;box-shadow:0 2px 8px #0002;z-index:10000;">
+      <div id="styler-menu-dropdown"
+        style="display:none;position:absolute;top:38px;left:0;width:240px;background:#fff;border-radius:0 0 6px 6px;box-shadow:0 2px 8px #0002;z-index:10000;">
         <div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;">Placeholder 1</div>
         <div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;">Placeholder 2</div>
         <div id="styler-close-btn" style="padding:10px;color:#f44336;cursor:pointer;">Close</div>
@@ -802,40 +803,47 @@ TODO:
         <div id="color-preview"
           style="margin-top:10px;width:100%;height:30px;border-radius:4px;background:rgb(255,255,255);"></div>
       </div>
+
+
+      <iframe title="Styler Panel" src="styler.html"
+        style="width:100%;height:200px;border:none;margin-top:10px;"></iframe>
+
+
+
       <button id="persist-style" style="margin-top:10px;width:100%;">Persist</button>
 
     </div>
   </div>
 
 
-<script>
-// Drag functionality for styler panel
-(function () {
-  const panel = document.getElementById('styler-panel');
-  const dragBar = document.getElementById('styler-drag');
-  let offsetX = 0, offsetY = 0, isDown = false;
+  <script>
+    // Drag functionality for styler panel
+    (function () {
+      const panel = document.getElementById('styler-tool');
+      const dragBar = document.getElementById('styler-drag');
+      let offsetX = 0, offsetY = 0, isDown = false;
 
-  dragBar.addEventListener('mousedown', function(e) {
-    isDown = true;
-    // Calculate offset between mouse and panel top-left
-    const rect = panel.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-    document.body.style.userSelect = 'none';
-  });
+      dragBar.addEventListener('mousedown', function (e) {
+        isDown = true;
+        // Calculate offset between mouse and panel top-left
+        const rect = panel.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        document.body.style.userSelect = 'none';
+      });
 
-  document.addEventListener('mousemove', function(e) {
-    if (!isDown) return;
-    panel.style.left = (e.clientX - offsetX) + 'px';
-    panel.style.top = (e.clientY - offsetY) + 'px';
-  });
+      document.addEventListener('mousemove', function (e) {
+        if (!isDown) return;
+        panel.style.left = (e.clientX - offsetX) + 'px';
+        panel.style.top = (e.clientY - offsetY) + 'px';
+      });
 
-  document.addEventListener('mouseup', function() {
-    isDown = false;
-    document.body.style.userSelect = '';
-  });
-})();
-</script>
+      document.addEventListener('mouseup', function () {
+        isDown = false;
+        document.body.style.userSelect = '';
+      });
+    })();
+  </script>
 
 
 
@@ -870,6 +878,8 @@ TODO:
       });
     })();
   </script>
+
+  
   <script>
     (function () {
       const r = document.getElementById('r-slider');
@@ -908,7 +918,7 @@ TODO:
       });
     })();
   </script>
- 
+
 
 </body>
 
