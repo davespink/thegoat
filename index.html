@@ -391,7 +391,7 @@ TODO:
 
 </head>
 
-<body style="background-color: var(--primary-bg); color: var(--text-alt);" oncontextmenu="alert(event.target.id)">
+<body style="background-color: var(--primary-bg); color: var(--text-alt);">
 
   <div id="custom-alert" class="alert" onclick="document.getElementById('custom-alert').style.display='none'">
     <span id="alert-message"></span>
@@ -797,21 +797,12 @@ TODO:
       </div>
     </div>
     <div style="background:#fff;color:black;font-size:16px;border-radius:0 0 6px 6px;">
-      <div>
-        <label>R: <input type="range" min="0" max="255" value="255" id="r-slider"></label><br>
-        <label>G: <input type="range" min="0" max="255" value="255" id="g-slider"></label><br>
-        <label>B: <input type="range" min="0" max="255" value="255" id="b-slider"></label><br>
-        <div id="color-preview"
-          style="margin-top:10px;width:100%;height:30px;border-radius:4px;background:rgb(255,255,255);"></div>
-      </div>
+     
 
 
       <iframe title="Styler Panel" src="styler.html"
-        style="width:100%;height:200px;border:none;margin-top:10px;"></iframe>
+        style="width:100%; height:fit-content; border:none ;overflow:hidden;" scrolling="no"></iframe>
 
-
-
-      <button id="persist-style" style="margin-top:10px;width:100%;">Persist</button>
 
     </div>
   </div>
@@ -880,6 +871,8 @@ TODO:
     })();
   </script>
 
+<!--
+
 
   <script>
     (function () {
@@ -919,8 +912,36 @@ TODO:
       });
     })();
   </script>
+-->
 
-
+  <script>
+    document.addEventListener('contextmenu', function(event) {
+  event.preventDefault(); // Prevent default menu
+  document.querySelectorAll('*').forEach(el => {
+    el.style.outline = ''; // Remove highlight from all elements
+  });
+  // Highlight the element
+  event.target.style.outline = '2px solid orange';
+  // Show your custom menu at event.clientX/Y
+  // ...your code to show menu...
+});
+  </script>
+  <script>
+function clearAllOutlines() {
+  // Remove outlines from top document
+  document.querySelectorAll('*').forEach(el => {
+    el.style.outline = '';
+  });
+  // Remove outlines from all iframes
+  Array.from(document.getElementsByTagName('iframe')).forEach(frame => {
+    try {
+      if (frame.contentWindow && typeof frame.contentWindow.clearAllOutlines === 'function') {
+        frame.contentWindow.clearAllOutlines();
+      }
+    } catch (e) {}
+  });
+}
+</script>
 </body>
 
 </html>

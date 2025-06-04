@@ -5,31 +5,40 @@
     <meta charset="UTF-8">
     <title>Profile</title>
 
-
-
-
-
-
     <style>
+        html,
+        body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             margin: 0;
             background: transparent;
+        }
+
+        #styler-panel {
+            height: 100%;
+            overflow: hidden;
         }
     </style>
 </head>
 
 <body>
 
-    <div id="styler-panel" class="w3-card w3-round w3-margin" style="color:var(--text-color)">
-        <div>
+    <div id="styler-panel" class="w3-card w3-round w3-margin"
+        style="height:100%;color:var(--text-color);overflow-y:hidden;">
+        <div style="text-align:center;padding:10px;">
             <label>R: <input type="range" min="0" max="255" value="255" id="r-slider"></label><br>
             <label>G: <input type="range" min="0" max="255" value="255" id="g-slider"></label><br>
             <label>B: <input type="range" min="0" max="255" value="255" id="b-slider"></label><br>
-            <div id="color-preview" style="margin-top:10px;width:100%;height:30px;border-radius:4px;background:blue;">
+            <div id="color-preview"
+                style="margin-top:10px;width:100%;height:30px;border-radius:4px;background:blue;">
             </div>
 
-            <button id="persist-style" style="margin-top:10px;width:100%;">Persist</button>
-
+            <button id="persist-style" style="margin-top:10px;margin-bottom:0px;width:90%;">Persist</button>
 
         </div>
     </div>
@@ -57,22 +66,14 @@
 
             [r, g, b].forEach(slider => slider.addEventListener('input', updateColor));
 
+
             // Persist style
             persistBtn.addEventListener('click', function () {
                 localStorage.setItem('iframe-bg', JSON.stringify({ r: r.value, g: g.value, b: b.value }));
                 alert('Style persisted!');
             });
-
-
-
-
-
         })();
     </script>
-
-
-
-
 
 </body>
 

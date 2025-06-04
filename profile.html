@@ -8,7 +8,27 @@
     <script src="libframe.js"></script>
 
 
+    <script>
+        function clearAllOutlines() {
+            document.querySelectorAll('*').forEach(el => {
+                el.style.outline = '';
+            });
+        }
 
+        document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('contextmenu', function (event) {
+                event.preventDefault();
+                // Ask parent to clear all outlines everywhere (including this iframe)
+                if (window.parent && typeof window.parent.clearAllOutlines === 'function') {
+                    window.parent.clearAllOutlines();
+                } else {
+                    clearAllOutlines();
+                }
+                // Highlight the clicked element
+                event.target.style.outline = '2px solid orange';
+            });
+        });
+    </script>
 
     <style>
         body {
