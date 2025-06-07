@@ -1,22 +1,44 @@
 <!DOCTYPE html>
 <html>
- 
+<script>
+    function gid(id) {
+      return  document.getElementById(id);
+    }
+    function $cd() {
+        const iframe = gid('theFrame');
+        return iframe.contentWindow.document;
+    }
+    function $gid(id) {
+        return $cd().getElementById(id);
+    }
+    function doClick() {
+       // const f = $cw().getElementById('aframe');
+         const f = $gid('aframe');
+        f.style.backgroundColor = 'yellow';
+    }
+
+
+
+
+</script>
 
 <body>
 
-      <button onclick="testFunction()">Test</button>
+    <iframe id="theFrame" src="myframe.html" title="Profile" style="width: 100%; height: 100%; border: none;"></iframe>
 
-      <script>
-          function testFunction() {
-              window.open('sizes.html', 'Sizes', 'width=300,height=300');
-          }
-      </script>
+
+    <button onclick="doClick()">doClick</button>
+
+
+
+
+
+
+
+
+
 
 </body>
 
-
-
-
-</body>
 
 </html>

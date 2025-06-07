@@ -1,0 +1,31 @@
+<html>
+
+<body>
+    <div>
+        <div id="aframe" style="width:300px; height:200px; background-color: lightblue; border: 1px solid black;">
+            <h1>Welcome to My Frame</h1>
+
+            <button id="abutton" onclick="doTest()">Call doTest in iframe</button>
+            <button id="mybutton" onclick="doTest()">Extra button</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to be called from the parent window
+        function doTest() {
+          //  alert("This is a test message from the frame. The frame is loaded successfully.");
+
+            const mybutton = document.getElementById("mybutton");
+
+            const newButton = mybutton.cloneNode(true);
+
+            const d = parent.window.document;
+
+            d.body.appendChild(newButton);
+
+        }
+    </script>
+
+</body>
+
+</html>
