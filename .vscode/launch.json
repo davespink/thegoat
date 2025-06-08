@@ -26,12 +26,7 @@
             "url": "http://localhost/projects/thegoat/sizes.html",
         },
 
-      {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Open test.html",
-            "url": "http://localhost/projects/thegoat/test.html",
-        }
+      
 
     ]
 }

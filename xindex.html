@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html>
+
+
+<!--
+
+TODO: 
+
+- Remove my onePost Gocky code and replace it with a filter function that filters posts by date and sorts them in descending order.
+- Create a read only version by hiding the controls
+
+
+-->
+
+
+
+<head>
+  <title>Life Thru A lense</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+
+  <style>
+    :root {
+      --primary-bg: #080202;
+      --secondary-bg: #0802021c;
+      --accent: #ff9800;
+      --button-bg: black;
+      --button-text: white;
+      --card-bg: beige;
+      --alert-error: #f44336;
+      --alert-warning: #ff9800;
+      --sidebar-btn-bg: #f1f1f1;
+      --sidebar-btn-hover: #e1e1e1;
+      --text-main: black;
+      --text-alt: white;
+      --border-main: white;
+    }
+
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-family: "Roboto", sans-serif;
+      font-weight: 400;
+    }
+
+    h1 {
+      font-size: 60px;
+    }
+
+    body {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--text-alt);
+      background-color: var(--primary-bg);
+      margin: 0;
+      padding: 0;
+    }
+
+    table,
+    th,
+    td {
+      border: 2px solid black;
+      padding: 0px;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    td:nth-child(2),
+    th:nth-child(2),
+    td:nth-child(3),
+    th:nth-child(3) {
+      padding: 2px;
+    }
+
+    td:nth-child(3),
+    th:nth-child(3) {
+      padding: 2px;
+      text-align: center;
+    }
+
+
+    #middle-column {
+      /* Adjust height as needed */
+      height: 1000px;
+      overflow-y: auto;
+      margin-bottom: auto;
+      /* Enable vertical scrolling */
+    }
+
+    .post-header {
+      height: 280px;
+      background-color: #f1f1f1;
+      border-radius: 20px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .post-container {
+      overflow-y: auto;
+      /* Enable vertical scrolling */
+      font-size: 18px;
+      /* Adjust font size as needed */
+
+      width: 100%
+    }
+
+    .input-form {
+      display: none;
+      /* Hide the form initially */
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .alert {
+      position: fixed;
+      top: 20%;
+      /* Center vertically */
+      left: 50%;
+      /* Center horizontally */
+      transform: translate(-50%, -50%);
+      /* Adjust for the element's size */
+      background-color: beige;
+      /* Red background */
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      font-size: larger;
+      color: black;
+      text-align: center;
+      /* Center the text inside the alert */
+      width: 300px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      /* Optional: Set a fixed width */
+      transition: opacity 2.0s ease-in-out;
+    }
+
+    .alert-success {
+      background-color: beige;
+      /* Green */
+    }
+
+    .alert-warning {
+      background-color: #ff9800;
+      /* Orange */
+    }
+
+    .alert-error {
+      background-color: #f44336;
+      /* Red */
+    }
+
+    .button {
+      display: inline-block;
+      padding: 2px 8px 2px 8px;
+      font-size: 16px;
+      border: 1px solid #333;
+      border-radius: 2px;
+      background: var(--button-bg);
+      color: var(--button-text);
+      cursor: pointer;
+      transition: background 0.2s;
+      text-align: center;
+    }
+
+    .button:hover {
+      background: #e0e0e0;
+    }
+
+    .white-text {
+      color: var(--text-alt);
+    }
+
+    .black-text {
+      color: var(--text-main);
+    }
+
+    /* Style the content row: image left, text right */
+    .template-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    /* Make sure the text takes up remaining space */
+    .template-text {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Style the buttons row */
+    .template-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      gap: 10px;
+    }
+
+
+    #template {
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    }
+
+    /* Optional: group first two buttons on left */
+
+
+    .template-buttons button:last-child {
+      margin-left: auto;
+
+      /* Last button floats right */
+
+    }
+
+    .sidebar-btn {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      padding: 10px;
+      text-align: left;
+      border: none;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+      color: #333;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .sidebar-btn:hover {
+      background-color: #e1e1e1;
+    }
+
+    .sidebar-img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      border-radius: 5%;
+    }
+
+    .sidebar-title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    /* Make the middle column full width and hide sidebars on small screens */
+    @media (max-width: 800px) {
+      .w3-content {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        max-width: 100vw !important;
+        box-sizing: border-box;
+      }
+
+      .admin {
+        display: none !important;
+      }
+
+      #left-column {
+        display: none !important;
+      }
+
+      #right-column {
+        display: none !important;
+      }
+
+
+      #middle-column {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        float: none !important;
+        display: block !important;
+      }
+
+
+
+      .w3-col.m7 {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .post-header,
+      .post-content,
+      .post,
+      .w3-card,
+      .w3-card-4 {
+        width: 100% !important;
+        padding-left: 0x !important;
+        padding-right: 5px !important;
+        box-sizing: border-box;
+      }
+
+      .post-header {
+        height: auto !important;
+        padding: 8px !important;
+      }
+
+      .post {
+        margin-bottom: 10px !important;
+        border-radius: 10px !important;
+      }
+
+      .post-image {
+        width: 100px !important;
+        height: auto !important;
+      }
+    }
+  </style>
+  <!--
+
+   used for static hosting, so no need for a service worker
+
+
+
+
+  <script src="content.js"></script>
+
+
+-->
+  <script> const useRemote = false; </script>
+  <script src="blogging-1.3.1.js"></script>
+
+
+  <script>
+    var posts; // important to have this here to avoid errors
+    const readOnly = false;
+    const onePost = false; // Set to true to show only one post at a time
+    var isAdmin; // set later based on query string
+
+
+    window.onload = async function () {
+      await renderPosts();
+
+      renderHashtags();
+
+      // Parse slug from query string
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('slug');
+      isAdmin = params.get('admin') === 'true';
+
+
+      if (slug && Array.isArray(posts)) {
+        const post = posts.find(p => p.slug === slug);
+        if (post) {
+          scrollToPost(post.key);
+        }
+      }
+
+      if (!isAdmin) {
+        // Hide admin controls if not in admin mode
+        document.querySelectorAll('.admin').forEach(function (element) {
+          //      element.style.display = 'none';
+        });
+      }
+
+      if (readOnly) {
+        document.querySelectorAll('.admin').forEach(function (element) {
+          //   element.style.display = 'none';
+        });
+
+      }
+
+    };
+
+
+    function showImage(imageUrl) {
+      preview.src = imageUrl.url;
+      // alert("Image selected: " + imageUrl.name);
+      document.getElementById("current-image").textContent = `${imageUrl.name}`;
+
+    }
+
+
+  </script>
+
+
+</head>
+
+<body style="background-color: var(--primary-bg); color: var(--text-alt);">
+
+  <div id="custom-alert" class="alert" onclick="document.getElementById('custom-alert').style.display='none'">
+    <span id="alert-message"></span>
+  </div>
+
+
+  <!-- Page Container -->
+  <div class="w3-container w3-content" style="max-width:1400px;margin-top:10px;padding:0px;">
+    <!-- The Grid -->
+    <div class="w3-row" style="padding:0px">
+
+
+      <!-- Left Column -->
+      <div id="left-column" class="w3-col m2">
+        <br>
+
+
+        <!-- IFrame version -->
+
+        <iframe id="profile" src="profile.html" style="width:100%;border:none;height:320px;" title="Profile"></iframe>
+
+
+
+        <!-- Admin Operations -->
+        <div class="w3-card w3-round w3-white w3-center admin" style="height:50vh">
+
+          <div class="w3-container">
+            <p>Storage Operations</p>
+
+            <div class="w3-card w3-round w3-white w3-center">
+              <div class="w3-container">
+
+                <p><button onclick="deleteAllPosts()" class="w3-button w3-block w3-theme-d2">Clear Storage</button>
+                </p>
+                <p><button onclick="downloadPosts()" class="w3-button w3-block w3-theme-d2">Download Posts</button></p>
+                <p><button onclick="uploadPosts()" class="w3-button w3-block w3-theme-d2">Upload Posts</button></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Column -->
+      <div id="middle-column" class="w3-col m7" style="background-color:rgb(19, 19, 3);padding:0px">
+        <div>
+          <div class="w3-col m12" style="padding:0px;margin-left:0px;margin-right:0px; ">
+            <div>
+              <div>
+                <div>
+                  <div class="w3-sans-serif post-container">
+
+                    <header>
+                      <img src="images/banner.png" alt="robbie" class="w3-center"
+                        style="width:100%; border-radius: 20px;transform: scale(0.9)">
+                    </header>
+
+                    <div class="content " style="padding: 15px;">
+                      <p>Life Through a Lens.
+
+                        A recent chat with I can't remember who
+                        about the Robbie Williams movie
+                        "A Better Man" caused me to pick a random
+                        Robbie track, to listen to.
+                        Chance threw me "Life Thru a Lens",
+                        and though it's not one his more famous efforts,
+                        there was a nifty tune.
+                      <p>
+                        I wondered what it was all about? Fresh from my
+                        recent bout of cinematic Robbiemania, I looked for some
+                        meaning in the lyrics. It seemed obvious
+                        this was about fame, publicity, image,
+                        photographers, paparazzi.
+                      <p>
+                        Maybe Robbie had penned this as he was
+                        experiencing the price of fame?
+                        Who knows? But then something else clicked, and
+                        it came to me that life is indeed often lived through
+                        a lens, not literally, but metaphorically.
+                    </div>
+
+                    <div id="allPosts" class="w3-container w3-justify">
+
+                    </div>
+
+                    <template id="template-post">
+                      <div class="post" id="post" style="background-color: beige; padding: 12px; margin-bottom: 10px;">
+                        <div class="post-header w3-container w3-light-grey"
+                          style="width:100%; border-radius: 10px; box-shadow: 0 18px 12px rgba(0,0,0,.25);">
+                          <header>
+                            <h3 class="post-headline">Template</h3>
+                          </header>
+                          <div class="template-content">
+                            <img class="template-image post-image" src="images/puppy.jpg" height="150" alt="Avatar">
+                            <div class="template-teaser">
+                              <p>Some text</p>
+                            </div>
+                          </div>
+                          <div class="template-buttons">
+                            <button class="admin edit-btn" onclick=" ">Edit</button>
+                            <button class="admin delete-btn" onclick=" ">Delete</button>
+
+                            <button class="button readmore-btn" onclick="togglePost.call(this)"
+                              aria-label="Toggle post content">Read More</button>
+                          </div>
+                        </div>
+
+                        <div class="post-content" style="display: none;padding-top: 10px;color:black">
+                          <p>Post content goes here. This is where the full content of the post will be displayed.</p>
+
+                        </div>
+
+
+                    </template>
+
+
+
+                    <template id="sidebar-item-template">
+                      <button class="w3-button w3-block w3-theme-l4 sidebar-btn"
+                        style="margin-bottom:5px; display:flex; align-items:center;">
+                        <img class="sidebar-img" style="width:30px; height:30px; margin-right:10px;">
+                        <span class="sidebar-title"></span>
+                      </button>
+                    </template>
+
+
+
+                  </div>
+
+
+                  <div class="w3-container input-form" style="padding: 10px;">
+                    <h3 id="editType">Create New Post</h3>
+                    <form id="new-post-form" class="w3-form">
+                      <label for="post-key">Post Key (unique ID)</label>
+                      <input type="text" id="post-key" class="w3-input w3-margin-bottom" placeholder="e.g., post-123"
+                        required aria-describedby="post-key-error">
+                      <span id="post-key-error" class="w3-text-red" style="display:none;">Key must be unique.</span>
+
+
+                      <label for="post-slug">Slug</label>
+                      <input type="text" id="post-slug" class="w3-input w3-margin-bottom" placeholder="Post Slug">
+
+
+
+                      <label for="post-headlinex">Headline</label>
+                      <input type="text" id="post-headlinex" class="w3-input w3-margin-bottom"
+                        placeholder="Post Headline" required>
+
+
+
+
+
+                      <label for="post-teaser">Teaser</label>
+                      <input type="text" id="post-teaser" class="w3-input w3-margin-bottom"
+                        placeholder="Short teaser text" required>
+                      <label for="post-content">Content</label>
+                      <textarea id="post-content" class="w3-input w3-margin-bottom"
+                        placeholder="Post content (supports HTML)" rows="5" required></textarea>
+
+                      <!--
+                          
+                      <input type="file" id="post-imagex" class="w3-input w3-margin-bottom" accept="image/*">
+                      <p id="current-image" class="w3-text-grey">Current Image: None</p>
+   -->
+
+
+                      <div style="padding: 20px;text-align: center;">
+                        <p id="current-image"></p>
+
+
+                        <label for="fileInput" class="button">images</label>
+                        <input type="file" id="fileInput" onchange="handleFileSelect(files[0],showImage)"
+                          accept="image/*" style="display:none" />
+
+
+
+                        <div>
+                          <img id="preview" width="200" height="200" style="border-color: black; border-style: solid" />
+
+                        </div>
+
+
+
+                      </div>
+
+
+
+                      <label for="post-date">Date (optional, defaults to today)</label>
+                      <input type="date" id="post-date" class="w3-input w3-margin-bottom">
+                      <button type="submit" class="w3-button w3-theme-d2">Save Post</button>
+
+                      <!-- New button to hide the form -->
+                      <button type="button" class="w3-button w3-theme-l4 w3-right" onclick="hideForm()">Cancel</button>
+
+
+
+
+                    </form>
+
+
+
+
+
+                  </div>
+
+                  <script>
+                    const postKey = document.getElementById("post-key");
+                    //      postKey.value = Date.now();
+                    postKey.readOnly = true; // Make the key read-only
+                    postKey.addEventListener("focus", function () {
+                      this.blur(); // Prevents the user from focusing on the input field
+                    });
+
+                  </script>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div id="right-column" class="w3-col m3">
+        <div class="w3-card w3-round  w3-center">
+          <div class="w3-container">
+            <div class="w3-card w3-round w3-white w3-center">
+              <div class="w3-container">
+
+                <!-- Add the Create New Post button -->
+                <button id="show-all-btn" class="w3-button w3-theme-d2 w3-margin-top w3-margin-bottom"
+                  onclick="renderPosts()">Show All
+                  Posts</button>
+                <button class="w3-button w3-theme-d2 w3-margin-bottom admin" onclick="setupPostForm(true)">Create New
+                  Post</button>
+                <div id="side-menu" style="overflow:auto;height:400px"></div>
+              </div>
+            </div>
+            <p>That's all folks</p>
+
+            <!-- tags-->
+            <div class="w3-card w3-round w3-white w3-hide-small">
+              <div class="w3-container">
+                <p>hashtags</p>
+                <div id="hashtags-container" style="padding-bottom: 10px;"></div>
+              </div>
+            </div>
+            <br>
+
+
+
+
+            <div id="side-menu"></div>
+          </div>
+        </div>
+        <br>
+
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="w3-container" style="background-color:orange;padding:0px;text-align: center;">
+    <h6 style="color:white">Template by w3.css&nbsp;&nbsp;powered by cloudflare</h6>
+    </p>
+  </footer>
+
+  <script>
+    /* Accordion
+    function myFunction(id) {
+      var x = document.getElementById(id);
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += " w3-theme-d1";
+      } else {
+        x.className = x.className.replace("w3-show", "");
+        x.previousElementSibling.className = x.previousElementSibling.className.replace(" w3-theme-d1", "");
+      }
+    }
+
+ 
+    function openNav() {
+      var x = document.getElementById("navDemo");
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+      } else {
+        x.className = x.className.replace(" w3-show", "");
+      }
+    }
+
+    */
+
+    // Extract hashtags from all posts and display them
+    function extractHashtags(text) {
+      const matches = text.match(/#\w+/g);
+      if (!matches) return [];
+      // Filter out hashtags that are part of HTML entities (preceded by &)
+      return matches.filter(tag => {
+        const idx = text.indexOf(tag);
+        return idx === 0 || text[idx - 1] !== '&';
+      }).map(tag => tag.toLowerCase());
+    }
+
+    function getAllHashtags(posts) {
+      // Create a Set to store unique hashtags
+      const tags = new Set();
+      posts.forEach(post => {
+        // Combine all text fields that may contain hashtags
+        const content = [post.headline, post.teaser, post.content].join(' ');
+        // console.log(content);
+        extractHashtags(content).forEach(tag => tags.add(tag));
+      });
+      return Array.from(tags);
+    }
+
+    function renderHashtags() {
+      if (typeof posts === "undefined" || !Array.isArray(posts)) return;
+      const hashtags = getAllHashtags(posts);
+      const container = document.getElementById('hashtags-container');
+      if (!container) return;
+      container.innerHTML = hashtags.length
+        ? hashtags.map(tag =>
+          `<span class="w3-tag w3-small w3-theme-d5 hashtag-filter" style="cursor:pointer;margin:2px;">${tag}</span>`
+        ).join(' ')
+        : '<span class="w3-text-grey">No hashtags found</span>';
+
+      // Add click listeners to hashtags
+      document.querySelectorAll('.hashtag-filter').forEach(el => {
+        el.onclick = function () {
+          filterSidebarByHashtag(el.textContent);
+        };
+      });
+    }
+
+    // Filter posts by hashtag and update sidebar
+    function filterPostsByHashtag(tag) {
+      const filtered = posts.filter(post => {
+        const content = [post.headline, post.teaser, post.content].join(' ');
+        return extractHashtags(content).includes(tag);
+      });
+      renderPosts(filtered); // Only show filtered posts in sidebar
+    }
+
+    // Modify Show All Posts button to restore all posts
+    document.addEventListener('DOMContentLoaded', function () {
+      const showAllBtn = document.querySelector('button[onclick="renderPosts()"]');
+      if (showAllBtn) {
+        showAllBtn.onclick = function () {
+          renderPosts(posts); // Show all posts in sidebar
+        };
+      }
+    });
+  </script>
+  <script>
+    // Attach click handlers after the DOM is ready
+    document.addEventListener("DOMContentLoaded", function () {
+      // Hashtag click: filter sidebar
+      document.querySelectorAll('.hashtag-filter').forEach(el => {
+        el.onclick = function () {
+          filterSidebarByHashtag(el.textContent);
+        };
+      });
+
+      // "Show All" button click: show all sidebar buttons
+      const showAllBtn = document.getElementById('show-all-btn');
+      if (showAllBtn) {
+        showAllBtn.onclick = showAllSidebarButtons;
+      }
+    });
+  </script>
+
+  <script>
+
+    function doColors() {
+      const stylerIFrame = gid('styler-iframe');
+      stylerIFrame.src = "colors.html";
+      gid("styler-menu-dropdown").style.display = "none";
+    }
+    function doSizes() {
+      const stylerIFrame = gid('styler-iframe');
+      stylerIFrame.src = "sizes.html";
+      gid("styler-menu-dropdown").style.display = "none";
+    }
+
+  </script>
+
+
+
+  <!-- Add this to index.html, outside the iframe -->
+  <div id="styler-tool" style="position:fixed;top:40px;left:40px;width:240px;z-index:9999;box-shadow:0 2px 8px #0002;">
+    <div id="styler-drag"
+      style="background:#1976d2;color:#fff;padding:8px;cursor:move;font-weight:bold;border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:space-between;">
+      Styler Panel
+      <span id="styler-menu-btn" style="margin-left:auto;cursor:pointer;font-size:22px;padding:0 8px;">&#9776;</span>
+      <div id="styler-menu-dropdown"
+        style="display:none;position:absolute;top:38px;left:0;
+            width:240px;color:black;background:#fff;border-radius:0 0 6px 6px;box-shadow:0 2px 8px #0002;z-index:10000;">
+        <div onclick="doColors()" style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;">Colors</div>
+        <div onclick="doSizes()" style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;">Sizes</div>
+        <div id="styler-close-btn" style="padding:10px;color:#f44336;cursor:pointer;">Close</div>
+      </div>
+    </div>
+    <div style="background:#fff;color:black;font-size:16px;border-radius:0 0 6px 6px;">
+
+
+
+      <iframe id="styler-iframe" title="Styler Panel" src="colors.html"
+        style="width:100%; height:300px; border:none ;overflow:hidden;" scrolling="no"></iframe>
+
+
+    </div>
+  </div>
+
+
+  <script>
+    // Drag functionality for styler panel
+    (function () {
+      const panel = document.getElementById('styler-tool');
+      const dragBar = document.getElementById('styler-drag');
+      let offsetX = 0, offsetY = 0, isDown = false;
+
+      dragBar.addEventListener('mousedown', function (e) {
+        isDown = true;
+        // Calculate offset between mouse and panel top-left
+        const rect = panel.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        document.body.style.userSelect = 'none';
+      });
+
+      document.addEventListener('mousemove', function (e) {
+        if (!isDown) return;
+        panel.style.left = (e.clientX - offsetX) + 'px';
+        panel.style.top = (e.clientY - offsetY) + 'px';
+      });
+
+      document.addEventListener('mouseup', function () {
+        isDown = false;
+        document.body.style.userSelect = '';
+      });
+    })();
+  </script>
+
+  <script>
+    // Hamburger menu logic for styler panel
+    (function () {
+      const menuBtn = document.getElementById('styler-menu-btn');
+      const dropdown = document.getElementById('styler-menu-dropdown');
+      const closeBtn = document.getElementById('styler-close-btn');
+      const tool = document.getElementById('styler-tool');
+
+      menuBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      });
+
+      // Hide dropdown when clicking outside
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target) && e.target !== menuBtn) {
+          dropdown.style.display = 'none';
+        }
+      });
+
+      // Close panel on "Close" click
+      closeBtn.addEventListener('click', function () {
+        tool.style.display = 'none';
+      });
+    })();
+  </script>
+
+  <!--
+
+
+  <script>
+    (function () {
+      const r = document.getElementById('r-slider');
+      const g = document.getElementById('g-slider');
+      const b = document.getElementById('b-slider');
+      const preview = document.getElementById('color-preview');
+      const iframe = document.querySelector('iframe[title="Profile"]');
+      const persistBtn = document.getElementById('persist-style');
+
+      function updateColor() {
+        const rgb = `rgb(${r.value},${g.value},${b.value})`;
+        preview.style.background = rgb;
+        if (iframe && iframe.contentWindow && iframe.contentWindow.document && iframe.contentWindow.document.body) {
+          iframe.contentWindow.document.body.style.background = rgb;
+        }
+      }
+
+      // Load persisted style
+      const saved = localStorage.getItem('iframe-bg');
+      if (saved) {
+        try {
+          const { r: rv, g: gv, b: bv } = JSON.parse(saved);
+          r.value = rv; g.value = gv; b.value = bv;
+        } catch { }
+      }
+      // Ensure color is applied to iframe on load
+      iframe.addEventListener('load', updateColor);
+      updateColor();
+
+      [r, g, b].forEach(slider => slider.addEventListener('input', updateColor));
+
+      // Persist style
+      persistBtn.addEventListener('click', function () {
+        localStorage.setItem('iframe-bg', JSON.stringify({ r: r.value, g: g.value, b: b.value }));
+        alert('Style persisted!');
+      });
+    })();
+  </script>
+-->
+
+  <script>
+    document.addEventListener('contextmenu', function (event) {
+      event.preventDefault(); // Prevent default menu
+      //document.querySelectorAll('*').forEach(el => {
+      //  el.style.outline = ''; // Remove highlight from all elements
+      //  });
+      clearAllOutlines();
+      // Highlight the element
+      event.target.style.outline = '2px solid orange';
+      document.getElementById('styler-tool').style.display = 'block';
+      // Show your custom menu at event.clientX/Y
+      // ...your code to show menu...
+    });
+  </script>
+  <script>
+    function clearAllOutlines() {
+      // Remove outlines from top document
+      document.querySelectorAll('*').forEach(el => {
+        el.style.outline = '';
+      });
+      // Remove outlines from all iframes
+      Array.from(document.getElementsByTagName('iframe')).forEach(frame => {
+        try {
+          if (frame.contentWindow && typeof frame.contentWindow.clearAllOutlines === 'function') {
+            frame.contentWindow.clearAllOutlines();
+          }
+        } catch (e) { }
+      });
+    }
+  </script>
+</body>
+
+</html>

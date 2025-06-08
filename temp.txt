@@ -1,0 +1,119 @@
+AI roundup 8-June-2025
+================
+Get tired of all the "This changes everything!"
+"Wow look at this!" videos.
+"AI"  Search on YouTube posts almost every day and
+the info is excellent. It's now just about the only one I'd
+bother to watch.
+
+https://youtu.be/abbQkYmH9FA?si=0_Q529ZUJ10_IjQ9
+
+Things continue apace and each day progress
+ seems to be getting faster.The AI zoo is full
+of models. The usual suspects, Microsoft,
+Google, Anthropic, plus OpenAI.
+All have some new versions, and then as usual
+the Chinese make some faster break thru running
+on slower hardware.
+
+So you pay to use the closed models,
+but openAI is open, and Cloudflare
+give you a lot of free tokens.
+
+Surprised how now people are downloading
+modules and running them locally. I downloaded
+ComfyUI , which is a workbench. Huge
+download, includes models,
+not tried it out yet but will be slow.
+Like how it seems you can just use templates for
+workflows. It's a an install based on python,
+not a web app.
+
+Toying with the idea of upgrading my
+PC since it cannot be interfaced with
+a GPU. Taking a look at what's on the
+market. Use to upgrade every 18 months
+or so. Never for the sake of it, but I 
+would upgrade when my hw would
+not run the software I was targeting.
+
+I would budget maybe 3k, nowadays
+I think that's a lot of money
+but maybe not. Will also look into
+paid cloud solutions and fully
+explore cloudflare. 
+
+Copilot says there is no webapp
+workbench as it knows about
+so as an exercise i'll keep on
+developing my own.
+
+Noticed Altman on youtube cooking up
+the next big thing which will be a device.
+No details just him and Johnny Ive
+in some poncy, SF Coffee Bar talking waffle
+and name dropping. Said it will replace the
+smartphone, the later said it wouldn't
+but would compliment current devices.
+
+No details, no mock up, so maybe it's 
+just another version of Amazon Alexa,
+or Hey Google for the home. Wait and
+see.
+
+Experience with github copilot continues.
+Seems my experience more or
+less chimes with general wisdom
+on AI coding.
+
+Also, been playing with prompt engineering—sometimes a
+tiny tweak in wording makes a big difference in output quality. 
+Still feels a bit like an art. My workbench will
+include a prompt generator. I think the skill is
+in knowing how to prompt and an idea of how AI
+works under the hood.
+
+Good Points.
+Make snippets to order where I
+cant remember the syntax and I'd
+normally look it up on W3Schools,
+or StackOverflow. It will write the
+code and optionally edit it into
+the codebase. A great time server.
+
+Can correct my misconceptions
+e.g. My code would not work because 
+I was running it in the file system.
+I was makes x-origin calls threw an 
+error, and I remember it telling me
+once that I needed a server. Good
+at getting little gotchas that would
+ need fiddle and trial and error.
+
+Bad at structure. Tends to magic up
+ HTML in js, and favours inline anonymous
+functions which I don't like. So I have
+to ask it to refactor or do it myself.
+DIY helps me understand the code
+and get comfy with it. Can then see reuse 
+and simplification opportunities.
+
+You need to keep a strong hold on
+your architecture or you end up
+with spaghetti with tons of repeated 
+code.
+
+All in all I'm probably twice as 
+productive at least. A great help,
+well worth it.
+
+I'm starting to think there will be a 
+place for developers, people who are 
+comfortable with AI and can axt as the
+ middle man to get results. Knowing 
+ the tools and how to apply them,
+ keeping up to date with latest
+ trends. And a broad knowledge of
+ IT in general will be in demand.
+
+
