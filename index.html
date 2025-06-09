@@ -17,7 +17,7 @@
     <iframe id="theFrame" src="myframe.html" title="Profile"
         style="margin:20px; border: solid 2px black;padding:0px"></iframe>
 
-    <button id="test" onclick="doClick()" >doClick</button>
+    <button id="drag" onclick="doClick()">doClick</button>
 
     <div id="custom-context-menu"
         style="display:none;position:absolute;z-index:10000;background:#fff;border:1px solid #ccc;box-shadow:0 2px 8px #0002;border-radius:4px;min-width:120px;">
@@ -51,17 +51,16 @@
         function gid(id) {
             return document.getElementById(id);
         }
-        function $cd() {
+        function $wb() {
             const iframe = gid('theFrame');
             return iframe.contentWindow.document;
         }
         function $gid(id) {
-            return $cd().getElementById(id);
+            return $wb().getElementById(id);
         }
         function doClick() {
             dragAll();
-        //    const f = $gid('aframe');
-//f.style.backgroundColor = 'yellow';
+
         }
 
 
@@ -85,7 +84,7 @@
                 e = e || window.event;
                 e.preventDefault();
                 // calculate the new cursor position:
-        
+
                 pos1 = pos3 - e.clientX;
                 pos2 = pos4 - e.clientY;
                 pos3 = e.clientX;
@@ -102,26 +101,32 @@
             }
         }
         function dragAll() {
+            //   alert("drag");
             const drags = document.querySelectorAll('.draggable');
             drags.forEach(drag => {
                 drag.style.position = 'absolute';
+                drag.onclick = function (e) {
+                    e.stopPropagation(); // Prevent click event from bubbling up
+                };
                 dragElement(drag);
             });
         }
 
         let mouseDownTime = 0, startX = 0, startY = 0;
 
-        document.addEventListener('mousedown', function(e) {
+        document.addEventListener('mousedown', function (e) {
             mouseDownTime = Date.now();
             startX = e.clientX;
             startY = e.clientY;
         });
 
-        document.addEventListener('mouseup', function(e) {
+        document.addEventListener('mouseup', function (e) {
             const duration = Date.now() - mouseDownTime;
             const dist = Math.abs(e.clientX - startX) + Math.abs(e.clientY - startY);
             if (duration < 200 && dist < 5 && e.button === 0) {
-                // Treat as click
+                alert("Clicked on: " + e.target.tagName);
+                const f = $gid('aframe');
+                f.style.backgroundColor = 'yellow';
             } else if (e.button === 0) {
                 // Treat as drag
             }

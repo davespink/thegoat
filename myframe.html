@@ -18,8 +18,7 @@
             <h1>Welcome to My Frame</h1>
 
 
-            <div id="adiv" onclick="
-  
+            <div id="adiv" class="draggable" onclick="
               if (this.parentNode.id !== 'aframe') {
                 alert('This div is not inside the frame!');
                 return;
@@ -27,13 +26,14 @@
                 const newDiv = this.cloneNode(true);
                 const d = parent.window.document;
                 d.body.appendChild(newDiv);
+                let a = d.getElementById('drag');
+                 a.click();
+
             }
 
             " style="width:100px;height:50px;padding: 8px; 
             cursor: pointer;background-color: blueviolet;
              border-bottom: 1px solid #7b2525;">Div 1
-
-              
             </div>
 
 
@@ -46,12 +46,15 @@
                 const newButton = this.cloneNode(true);
                 const d = parent.window.document;
                 d.body.appendChild(newButton);
-             
+             // debugger;
+                  let a = d.getElementById('drag');
+                  a.click();
+              //console.log(a);
             } 
 
             ">Button 1</button>
 
-       
+
         </div>
     </div>
 
@@ -77,6 +80,7 @@
                 //    const d = parent.window.document;
                 const d = window.top.document;
                 d.body.appendChild(newButton);
+
             }
         }
     </script>
