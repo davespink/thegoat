@@ -1,28 +1,82 @@
 <html>
+<style>
+    html,
+    body,
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        /* Optional: prevents scrollbars if you don't want them */
+    }
+</style>
 
 <body>
     <div>
-        <div id="aframe" style="width:300px; height:200px; background-color: lightblue; border: 1px solid black;">
+        <div id="aframe"
+            style="width:300px; height:400px; background-color: lightblue; border: 1px solid black;margin:0px">
             <h1>Welcome to My Frame</h1>
 
-            <button id="abutton" onclick="doTest()">Call doTest in iframe</button>
-            <button id="mybutton" onclick="doTest()">Extra button</button>
+
+            <div id="adiv" onclick="
+  
+              if (this.parentNode.id !== 'aframe') {
+                alert('This div is not inside the frame!');
+                return;
+            } else {
+                const newDiv = this.cloneNode(true);
+                const d = parent.window.document;
+                d.body.appendChild(newDiv);
+            }
+
+            " style="width:100px;height:50px;padding: 8px; 
+            cursor: pointer;background-color: blueviolet;
+             border-bottom: 1px solid #7b2525;">Div 1
+
+              
+            </div>
+
+
+            <button id="abutton" onclick="
+  
+              if (this.ownerDocument === window.top.document) {
+                alert('This button is not inside the frame!');
+                return;
+            } else {
+                const newButton = this.cloneNode(true);
+                const d = parent.window.document;
+                d.body.appendChild(newButton);
+            } 
+
+            ">Button 1</button>
+
+            <button id="mybutton" onclick="doTest(this)">Button2</button>
         </div>
     </div>
 
     <script>
+
+        const d = window.top.document;
+        const aframe = document.getElementById('aframe');
+        let e = d.getElementById('theFrame');
+        e.style.width = aframe.style.width;
+        e.style.height = aframe.style.height;
+        e.style.border = '2px solid red';
+
         // Function to be called from the parent window
-        function doTest() {
-          //  alert("This is a test message from the frame. The frame is loaded successfully.");
+        function doTest(thisButton) {
+            //  if (thisButton.parentNode.id !== 'aframe') {
+            if (thisButton.ownerDocument === window.top.document) {
+                alert('This button is not inside the frame!');
+                return;
+            } else {
 
-            const mybutton = document.getElementById("mybutton");
+                const newButton = thisButton.cloneNode(true);
 
-            const newButton = mybutton.cloneNode(true);
-
-            const d = parent.window.document;
-
-            d.body.appendChild(newButton);
-
+                //    const d = parent.window.document;
+                const d = window.top.document;
+                d.body.appendChild(newButton);
+            }
         }
     </script>
 

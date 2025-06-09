@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html>
-
+<style>
+html, body,* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden; /* Optional: prevents scrollbars if you don't want them */
+}
+</style>
 <body>
 
     <iframe id="theFrame" src="myframe.html" title="Profile"
-        style="width: 200px; height: 100px; border: solid 2px black;"></iframe>
+        style="margin:20px; border: solid 2px black;padding:0px"></iframe>
 
     <button onclick="doClick()">doClick</button>
 
