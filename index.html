@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
 <style>
-html, body,* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow: hidden; /* Optional: prevents scrollbars if you don't want them */
-}
+    html,
+    body,
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        /* Optional: prevents scrollbars if you don't want them */
+    }
 </style>
+
 <body>
 
     <iframe id="theFrame" src="myframe.html" title="Profile"
         style="margin:20px; border: solid 2px black;padding:0px"></iframe>
 
-    <button onclick="doClick()">doClick</button>
+    <button id="test" onclick="doClick()" >doClick</button>
 
     <div id="custom-context-menu"
         style="display:none;position:absolute;z-index:10000;background:#fff;border:1px solid #ccc;box-shadow:0 2px 8px #0002;border-radius:4px;min-width:120px;">
@@ -40,6 +44,7 @@ html, body,* {
             if (rightClickTarget) {
                 const clone = rightClickTarget.cloneNode(true);
                 rightClickTarget.parentNode.insertBefore(clone, rightClickTarget.nextSibling);
+                dragAll();
             }
         }
 
@@ -54,10 +59,76 @@ html, body,* {
             return $cd().getElementById(id);
         }
         function doClick() {
-
-            const f = $gid('aframe');
-            f.style.backgroundColor = 'yellow';
+            dragAll();
+        //    const f = $gid('aframe');
+//f.style.backgroundColor = 'yellow';
         }
+
+
+        function dragElement(elmnt) {
+            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            /* otherwise, move the DIV from anywhere inside the DIV:*/
+            elmnt.onmousedown = dragMouseDown;
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // get the mouse cursor position at startup:
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                // call a function whenever the cursor moves:
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // calculate the new cursor position:
+        
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                // set the element's new position:
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                /* stop moving when mouse button is released:*/
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+        function dragAll() {
+            const drags = document.querySelectorAll('.draggable');
+            drags.forEach(drag => {
+                drag.style.position = 'absolute';
+                dragElement(drag);
+            });
+        }
+
+        let mouseDownTime = 0, startX = 0, startY = 0;
+
+        document.addEventListener('mousedown', function(e) {
+            mouseDownTime = Date.now();
+            startX = e.clientX;
+            startY = e.clientY;
+        });
+
+        document.addEventListener('mouseup', function(e) {
+            const duration = Date.now() - mouseDownTime;
+            const dist = Math.abs(e.clientX - startX) + Math.abs(e.clientY - startY);
+            if (duration < 200 && dist < 5 && e.button === 0) {
+                // Treat as click
+            } else if (e.button === 0) {
+                // Treat as drag
+            }
+        });
+
+
+
     </script>
 
 </body>

@@ -37,7 +37,7 @@
             </div>
 
 
-            <button id="abutton" onclick="
+            <button id="abutton" class="draggable" onclick="
   
               if (this.ownerDocument === window.top.document) {
                 alert('This button is not inside the frame!');
@@ -46,11 +46,12 @@
                 const newButton = this.cloneNode(true);
                 const d = parent.window.document;
                 d.body.appendChild(newButton);
+             
             } 
 
             ">Button 1</button>
 
-            <button id="mybutton" onclick="doTest(this)">Button2</button>
+       
         </div>
     </div>
 
